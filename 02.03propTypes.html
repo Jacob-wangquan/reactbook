@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src='react/build/react.js'></script>
+  <script src='react/build/react-dom.js'></script>
+  <script>
+    //PropTypes 声明组件需要接收的属性列表及其对应类型
+    var Component = React.createClass({
+      propTypes: {
+        name: React.PropTypes.string.isRequired,
+      },
+      render: function() {
+        return React.DOM.span(null, "my name is "+ this.props.name);
+      }
+    });
+    ReactDOM.render(
+      React.createElement(Component, {
+        name: 'jacob'
+      }),  
+      document.getElementById("app")
+    )
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src='react/build/react.js'></script>
+  <script src='react/build/react-dom.js'></script>
+  <script>
+    //使用默认属性值，可以避免写防御性代码
+    var Component = React.createClass({
+      propTypes: {
+        firstName: React.PropTypes.string.isRequired,
+        middleName: React.PropTypes.string,
+        familyName: React.PropTypes.string.isRequired,
+        address: React.PropTypes.string
+      },
+      getDefaultProps: function() {
+        return {
+          middleName: '',
+          address: 'n/a'
+        }
+      },
+      render: function() {
+        return React.DOM.span(null, "my firstName is "+ this.props.firstName +","+"my address is "+this.props.address);
+      }
+    });
+    ReactDOM.render(
+      React.createElement(Component, {
+        firstName: 'jacob',
+        familyName: ''
+      }),  
+      document.getElementById("app")
+    )
+  </script>
+</body>
+</html>

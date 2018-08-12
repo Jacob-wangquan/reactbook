@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="react/build/react-with-addons.js"></script>
+  <script src='react/build/react-dom.js'></script>
+  <script>
+    //React.addons.PureRenderMixin 通用的性能优化
+    var Counter = React.createClass({
+      name: 'Counter',
+      mixins: [React.addons.PureRenderMixin],
+      propTypes: {
+        count: React.PropTypes.number.isRequired
+      },
+      render: function() {
+        console.log(this.name + '::render()');
+        return React.DOM.span(null, this.props.count);
+      }
+    });
+    //父组件
+    var TextAreaCounter = React.createClass({
+      name: 'TextAreaCounter',
+
+      propTypes: {
+        defaultValue: React.PropTypes.string
+      },
+
+      getInitialState: function() {
+        return {
+          text: this.props.defaultText
+        }
+      },
+    
+      _textChange: function(e) {
+        this.setState({
+          text: e.target.value
+        })
+      },
+     
+      render: function() {
+        console.log(this.name + '::render()');
+        var counter = null;
+         //如果有内容时， 渲染Counter
+        if(this.state.text.length > 0) {
+          counter = React.DOM.h3(null,
+            React.createElement(Counter, {
+                count: this.state.text.length  
+              })
+          );
+        }
+        return React.DOM.div(
+          null,
+          React.DOM.textarea({
+            value: this.state.text,
+            onChange: this._textChange
+          }),
+          counter
+        );
+      }
+    });
+
+    var myTextAreaCounter = ReactDOM.render(
+      React.createElement(TextAreaCounter, {
+        defaultText: 'jacob'
+      }),  
+      document.getElementById("app")
+    )
+  </script>
+</body>
+</html>

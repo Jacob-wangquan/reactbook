@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src='react/build/react.js'></script>
+  <script src='react/build/react-dom.js'></script>
+  <script>
+    //让数据在改变时，组件会随之刷新
+    //将this.state当做只读属性，使用 this.setState()更新数据
+    var TextAreaCounter = React.createClass({
+      propTypes: {
+        defaultText: React.PropTypes.string
+      },
+      //初始化时 得到text
+      getInitialState: function() {
+        return {
+          text: this.props.defaultText
+        }
+      },
+    
+      //数据发生变化时，更新state
+      _textChange: function(e) {
+        this.setState({
+          text: e.target.value
+        })
+      },
+      //处理外部修改
+      componentWillReceiveProps: function(newProps) {
+        this.setState({
+          text: newProps.defaultText
+        })
+      },
+      // React使用 合成事件 来消除浏览器之间不一致的情况
+      // 事件处理使用驼峰命令法，基于性能考虑，使用了事件委托
+      render: function() {
+        return React.DOM.div(
+          null,
+          React.DOM.textarea({
+            value: this.state.text,
+            onChange: this._textChange
+          }),
+          React.DOM.h3(null, this.state.text.length)
+        );
+      }
+    });
+    var myTextAreaCounter = ReactDOM.render(
+      React.createElement(TextAreaCounter, {
+        defaultText: 'jacob'
+      }),  
+      document.getElementById("app")
+    )
+  </script>
+</body>
+</html>
